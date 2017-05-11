@@ -9,13 +9,7 @@ import org.springframework.web.bind.annotation.RestController
  * Created by Vladimir on 10.05.2017.
  */
 @SpringBootApplication
-@RestController
 class Application {
-
-    @RequestMapping("/")
-    String home() {
-        "HELLO"
-    }
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args)
