@@ -22,4 +22,18 @@ class TitanicRepositoryTest extends GroovyTestCase {
         assert data
         assert !data.empty
     }
+
+    @Test
+    void testGetTestSelection() {
+        def selection = repository.testSelection
+        assert selection
+        assert selection.size() == 201
+    }
+
+    @Test
+    void testGetTrainingSelection() {
+        def selection = repository.trainingSelection
+        assert selection
+        assert selection.size() == 2000
+    }
 }

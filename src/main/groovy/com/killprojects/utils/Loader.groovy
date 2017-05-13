@@ -1,6 +1,8 @@
 package com.killprojects.utils
 
+import com.google.cloud.storage.BlobId
 import com.google.cloud.storage.Storage
+import com.google.cloud.storage.StorageOptions
 import org.springframework.stereotype.Component
 
 /**
@@ -8,15 +10,31 @@ import org.springframework.stereotype.Component
  */
 @Component
 class Loader {
-    private Storage storage
+    public static final String BUCKET = "bucket6558873"
 
-    File loadData(String nameOfFile, boolean enableAppEngine) {
+    private final Storage storage
+
+    Loader() {
+        storage = StorageOptions.getDefaultInstance().getService()
+    }
+
+    InputStream loadData(String nameOfFile, boolean enableAppEngine) {
         if (enableAppEngine) {
-            //todo connect to appEngine
-            return null
+            def bytes = storage.readAllBytes(BlobId.of(BUCKET, nameOfFile))
+            return new ByteArrayInputStream(bytes)
         } else {
-            return new File(getClass().getResource("/$nameOfFile").path)
+            return new FileInputStream(new File(getClass().getResource("/$nameOfFile").path))
         }
+    }
+
+    private File createFile(InputStream stream) {
+        def fileWithData = new File("data.txt")
+        if (fileWithData.file) {
+            fileWithData.delete()
+        }
+        fileWithData.createNewFile()
+        fileWithData.append(stream)
+        fileWithData
     }
 
 }

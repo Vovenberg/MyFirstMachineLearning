@@ -19,7 +19,7 @@ class LoaderTest extends GroovyTestCase {
 
     @Test
     void testLoadDataFromLocal() {
-        def data = loader.loadData("titanic.txt", false)
+        def data = loader.loadData("titanic.txt", true)
         assert data
     }
 }

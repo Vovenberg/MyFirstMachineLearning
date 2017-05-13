@@ -20,7 +20,7 @@ class TitanicConverterTest extends GroovyTestCase {
     @Test
     void testConvertToList() {
         def path = getClass().getResource("/titanic.txt").path
-        def listPassengers = converter.convert(new File(path))
+        def listPassengers = converter.convert(new FileInputStream(new File(path)))
         assert listPassengers && !listPassengers.empty
     }
 

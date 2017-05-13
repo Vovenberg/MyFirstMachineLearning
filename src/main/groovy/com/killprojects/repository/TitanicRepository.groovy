@@ -25,11 +25,19 @@ class TitanicRepository {
 
     @PostConstruct
     def init() {
-        def file = loader.loadData(FILENAME, false)
+        def file = loader.loadData(FILENAME, true)
         data = converter.convert(file)
     }
 
     List<TitanicPassenger> getAllData() {
         return data
+    }
+
+    List<TitanicPassenger> getTrainingSelection() {
+        return data.collate(2000)[0]
+    }
+
+    List<TitanicPassenger> getTestSelection() {
+        return data.collate(2000)[1]
     }
 }

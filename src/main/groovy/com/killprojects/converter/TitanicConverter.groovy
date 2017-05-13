@@ -11,9 +11,9 @@ import static com.killprojects.utils.TitanicModelUtil.*
 class TitanicConverter implements Converter<TitanicPassenger> {
 
     @Override
-    List<TitanicPassenger> convert(File file) {
+    List<TitanicPassenger> convert(InputStream data) {
         def resultList = new ArrayList()
-        file.eachLine {
+        data.readLines().each {
             def (passClass, age, sex, survive) = it.tokenize("        ")
             resultList.add(new TitanicPassenger(passengerClass: getPassClass(passClass),
                     ageCategory: getAge(age),
@@ -25,7 +25,7 @@ class TitanicConverter implements Converter<TitanicPassenger> {
     }
 
     @Override
-    File convert(List<TitanicPassenger> list) {
+    InputStream convert(List<TitanicPassenger> list) {
         return null
     }
 }
