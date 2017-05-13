@@ -1,6 +1,7 @@
-package com.killprojects.converter
+package groovy.com.killprojects.converter
 
 import com.killprojects.Application
+import com.killprojects.converter.TitanicConverter
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired

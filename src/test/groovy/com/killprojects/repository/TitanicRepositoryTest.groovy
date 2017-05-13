@@ -1,6 +1,7 @@
-package com.killprojects.repository
+package groovy.com.killprojects.repository
 
 import com.killprojects.Application
+import com.killprojects.repository.TitanicRepository
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired

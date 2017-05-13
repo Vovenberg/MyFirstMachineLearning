@@ -1,6 +1,7 @@
-package com.killprojects.utils
+package groovy.com.killprojects.utils
 
 import com.killprojects.Application
+import com.killprojects.utils.Loader
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired

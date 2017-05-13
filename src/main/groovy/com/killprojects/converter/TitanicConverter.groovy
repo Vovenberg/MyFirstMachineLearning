@@ -21,11 +21,16 @@ class TitanicConverter implements Converter<TitanicPassenger> {
                     surviveType: getSurvive(survive)
             ))
         }
-        resultList
+        shuffleList(resultList)
     }
 
     @Override
     InputStream convert(List<TitanicPassenger> list) {
         return null
+    }
+
+    private static List shuffleList(ArrayList resultList) {
+        Collections.shuffle(resultList)
+        resultList
     }
 }

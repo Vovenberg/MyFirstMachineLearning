@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>VLDMRProject</title>
+</head>
+<body>
+    <p>Всего на борту Титаника было человек: 2201 </p>
+    <table>
+        <tr>
+            <td>
+                <p>Данные обучающей выборки(2000 пассажиров)</p>
+                <textarea cols="80" rows="40" th:text="${trainingData}" title="training"></textarea>
+            </td>
+            <td>
+                <p>Данные тестовой выборки(201 пассажир)</p>
+                <textarea cols="80" rows="40" th:text="${testingData}" title="testing"></textarea>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
