@@ -1,7 +1,6 @@
-package groovy.com.killprojects.utils
+package com.killprojects.learning
 
 import com.killprojects.Application
-import com.killprojects.utils.Loader
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -9,18 +8,17 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit4.SpringRunner
 
 /**
- * Created by Vladimir on 11.05.2017.
+ * Created by Vladimir on 13.05.2017.
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
-class LoaderTest extends GroovyTestCase {
+class SVMLearningTest extends GroovyTestCase {
 
     @Autowired
-    Loader loader
+    SVMLearning svmLearning
 
     @Test
-    void testLoadDataFromLocal() {
-        def data = loader.loadInputStreamWithData("titanic.txt", true)
-        assert data
+    void testLearn() {
+        svmLearning.learn()
     }
 }

@@ -18,23 +18,17 @@ class Loader {
         storage = StorageOptions.getDefaultInstance().getService()
     }
 
-    InputStream loadData(String nameOfFile, boolean enableAppEngine) {
+    File createFileWithData(String nameOfFile, boolean enableAppEngine) {
+        FileUtil.createFile(loadInputStreamWithData(nameOfFile, enableAppEngine), "target/$nameOfFile")
+    }
+
+    InputStream loadInputStreamWithData(String nameOfFile, boolean enableAppEngine) {
         if (enableAppEngine) {
             def bytes = storage.readAllBytes(BlobId.of(BUCKET, nameOfFile))
             return new ByteArrayInputStream(bytes)
         } else {
             return new FileInputStream(new File(getClass().getResource("/$nameOfFile").path))
         }
-    }
-
-    private File createFile(InputStream stream) {
-        def fileWithData = new File("data.txt")
-        if (fileWithData.file) {
-            fileWithData.delete()
-        }
-        fileWithData.createNewFile()
-        fileWithData.append(stream)
-        fileWithData
     }
 
 }

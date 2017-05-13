@@ -25,7 +25,7 @@ class TitanicRepository {
 
     @PostConstruct
     def init() {
-        def file = loader.loadData(FILENAME, true)
+        def file = loader.loadInputStreamWithData(FILENAME, true)
         data = converter.convert(file)
     }
 
