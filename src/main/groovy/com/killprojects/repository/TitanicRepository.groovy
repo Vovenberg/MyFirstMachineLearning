@@ -13,7 +13,7 @@ import javax.annotation.PostConstruct
  */
 @Component
 class TitanicRepository {
-    public static final String FILENAME = "titanic.txt"
+    public static final String FILENAME = "titanicData.txt"
 
     @Autowired
     Converter converter

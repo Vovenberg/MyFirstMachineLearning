@@ -6,7 +6,24 @@
 </head>
 <body>
     <p>Всего на борту Титаника было человек: 2201 </p>
+    <label th:text="${resultMessage}">Сообщения:</label>
     <table>
+        <tr>
+            <td>
+                <form action="/titanic/train">
+                    <h4>Обучение:</h4>
+                    <p>Количество итераций:</p>
+                    <input type="number" name="iterations" title="iterations"/>
+                    <input type="submit" value="Обучать" />
+                </form>
+            </td>
+            <td>
+                <form action="/titanic/test">
+                    <h4>Анализ тестовой выборки:</h4>
+                    <input type="submit" value="Начать"/>
+                </form>
+            </td>
+        </tr>
         <tr>
             <td>
                 <p>Данные обучающей выборки(2000 пассажиров)</p>
