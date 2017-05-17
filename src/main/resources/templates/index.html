@@ -15,11 +15,11 @@
                 <form action="/titanic/train">
                     <h4>Обучение:</h4>
                     <p>Степень:</p>
-                    <input type="number" value="3" name="degree" title="degree"/>
+                    <input type="number" th:value="${degree}" name="degree" title="degree"/>
                     <p>Гамма:</p>
-                    <input type="number" value="0" name="gamma" title="gamma"/>
-                    <!--<p>Коеффицент:</p>
-                    <input type="number" value="0" name="coef" title="coef"/>-->
+                    <input type="number" th:value="${gamma}" name="gamma" title="gamma"/>
+                    <p>NU:</p>
+                    <input type="text" th:value="${nu}" name="nu" title="nu"/>
                     <input type="submit" value="Обучать" />
                 </form>
             </td>

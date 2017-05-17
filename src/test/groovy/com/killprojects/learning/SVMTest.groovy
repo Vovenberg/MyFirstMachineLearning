@@ -24,13 +24,13 @@ class SVMTest extends GroovyTestCase {
 
     @Test
     void testTrain() {
-        svm.train(repository.trainingSelection,ParamsUtil.initParams(3,0))
+        svm.train(repository.trainingSelection,ParamsUtil.initParams(3,0,0.5))
         assert true
     }
 
     @Test
     void predictTrain() {
-        svm.train(repository.trainingSelection,ParamsUtil.initParams(2,1))
+        svm.train(repository.trainingSelection,ParamsUtil.initParams(2,1,0.5))
         def s = svm.predict(repository.testSelection)
         assert s
     }
