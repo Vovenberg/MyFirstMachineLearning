@@ -1,7 +1,6 @@
 package com.killprojects.learning
 
 import com.killprojects.Application
-import com.killprojects.learning.models.main.SVMParams
 import com.killprojects.repository.TitanicRepository
 import com.killprojects.utils.ParamsUtil
 import org.junit.Test
@@ -24,14 +23,23 @@ class SVMTest extends GroovyTestCase {
 
     @Test
     void testTrain() {
-        svm.train(repository.trainingSelection,ParamsUtil.initParams(3,0,0.5))
-        assert true
+        svm.train(repository.trainingSelection,ParamsUtil.initParamsRBF(3,0,0.5))
+        println svm.model.rho
     }
 
     @Test
-    void predictTrain() {
-        svm.train(repository.trainingSelection,ParamsUtil.initParams(2,1,0.5))
+    void predictTrainPoly() {
+        svm.train(repository.trainingSelection,ParamsUtil.initParamsPoly(2,2,3,0.5))
         def s = svm.predict(repository.testSelection)
         assert s
+        println s
+    }
+
+    @Test
+    void predictTrainRBF() {
+        svm.train(repository.trainingSelection,ParamsUtil.initParamsRBF(2,1,0.5))
+        def s = svm.predict(repository.testSelection)
+        assert s
+        println s
     }
 }

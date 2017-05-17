@@ -45,7 +45,7 @@ class TitanicController {
                          @RequestParam("degree") double degree,
                          @RequestParam("gamma") double gamma,
                          @RequestParam("nu") double nu) {
-        def params = ParamsUtil.initParams(degree, gamma, nu)
+        def params = ParamsUtil.initParamsRBF(degree, gamma, nu)
         def training = repository.trainingSelection
         svm.train(training, params)
 
