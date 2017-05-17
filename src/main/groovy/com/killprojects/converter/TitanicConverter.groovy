@@ -4,6 +4,7 @@ import com.killprojects.model.TitanicPassenger
 import org.springframework.stereotype.Component
 
 import static com.killprojects.utils.TitanicModelUtil.*
+
 /**
  * Created by Vladimir on 11.05.2017.
  */
@@ -20,6 +21,16 @@ class TitanicConverter implements Converter<TitanicPassenger> {
                     sex: getSex(sex),
                     surviveType: getSurvive(survive)
             ))
+        }
+        shuffleList(resultList)
+    }
+
+    List<List<Integer>> convertToQMatrix(InputStream data) {
+        def resultList = new ArrayList()
+        data.readLines().eachWithIndex { it, i ->
+            def (passClass, age, sex, survive) = it.tokenize("        ")
+            def xy= [passClass,age,sex,survive]
+            resultList.add(xy)
         }
         shuffleList(resultList)
     }

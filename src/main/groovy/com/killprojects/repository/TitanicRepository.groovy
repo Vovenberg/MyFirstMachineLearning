@@ -1,6 +1,7 @@
 package com.killprojects.repository
 
 import com.killprojects.converter.Converter
+import com.killprojects.converter.TitanicConverter
 import com.killprojects.model.TitanicPassenger
 import com.killprojects.utils.Loader
 import org.springframework.beans.factory.annotation.Autowired
@@ -16,28 +17,27 @@ class TitanicRepository {
     public static final String FILENAME = "titanicData.txt"
 
     @Autowired
-    Converter converter
+    TitanicConverter converter
 
     @Autowired
     Loader loader
 
-    private List<TitanicPassenger> data
+    private List<List<Integer>> trainData
+    private List<List<Integer>> testData
 
     @PostConstruct
     def init() {
-        def file = loader.loadInputStreamWithData(FILENAME, true)
-        data = converter.convert(file)
+        def inputStream = loader.loadInputStreamWithData(FILENAME, true)
+        def data = converter.convertToQMatrix(inputStream).collate(2000)
+        trainData = data[0]
+        testData = data[1]
     }
 
-    List<TitanicPassenger> getAllData() {
-        return data
+    List<List<Integer>> getTrainingSelection() {
+        return trainData
     }
 
-    List<TitanicPassenger> getTrainingSelection() {
-        return data.collate(2000)[0]
-    }
-
-    List<TitanicPassenger> getTestSelection() {
-        return data.collate(2000)[1]
+    List<List<Integer>> getTestSelection() {
+        return testData
     }
 }

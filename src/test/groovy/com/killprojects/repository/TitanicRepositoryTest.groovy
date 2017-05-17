@@ -18,13 +18,6 @@ class TitanicRepositoryTest extends GroovyTestCase {
     TitanicRepository repository
 
     @Test
-    void testGetAllData() {
-        def data = repository.getAllData()
-        assert data
-        assert !data.empty
-    }
-
-    @Test
     void testGetTestSelection() {
         def selection = repository.testSelection
         assert selection
