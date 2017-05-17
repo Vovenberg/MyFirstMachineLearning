@@ -1,26 +1,32 @@
 package com.killprojects.controllers
 
 import com.killprojects.learning.SVM
-import com.killprojects.learning.models.main.SVMParams
 import com.killprojects.model.TitanicPassenger
 import com.killprojects.repository.TitanicRepository
+import com.killprojects.utils.ParamsUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 
 /**
  * Created by Vladimir on 13.05.2017.
  */
 @Controller
 class TitanicController {
-    public static final String TITANIC_URI = "titanic"
+    public static final String TITANIC_URI = "index"
 
     @Autowired
     TitanicRepository repository
 
     @Autowired
     SVM svm
+
+    @RequestMapping("/")
+    String index(Model model){
+        return titanic_main(model)
+    }
 
     @RequestMapping("/titanic")
     String titanic_main(Model model) {
@@ -32,8 +38,11 @@ class TitanicController {
     }
 
     @RequestMapping("/titanic/train")
-    String titanic_train(Model model) {
-        def params = initParams()
+    String titanic_train(Model model,
+                         @RequestParam("degree") double degree,
+                         @RequestParam("gamma") double gamma
+                         /*@RequestParam("coef") double coef*/) {
+        def params = ParamsUtil.initParams(degree, gamma)
         def training = repository.trainingSelection
         svm.train(training, params)
 
@@ -43,34 +52,21 @@ class TitanicController {
         return TITANIC_URI
     }
 
-    static SVMParams initParams() {
-        SVMParams param = new SVMParams();
-        // default values
-        param.svm_type = SVMParams.C_SVC;
-        param.kernel_type = SVMParams.RBF;
-        param.degree = 3;
-        param.gamma = 0;    // 1/num_features
-        param.coef0 = 0;
-        param.nu = 0.5;
-        param.cache_size = 100;
-        param.C = 1;
-        param.eps = 1e-3;
-        param.p = 0.1;
-        param.shrinking = 1;
-        param.probability = 0;
-        param.nr_weight = 0;
-        param.weight_label = new int[0];
-        param.weight = new double[0];
-        param
-    }
-
     @RequestMapping("/titanic/test")
     String titanic_test(Model model) {
-        //def resultSVM = com.killprojects.learning.test()
-        def trainingInfos = repository.trainingSelection
-        model.addAttribute("trainingData", trainingInfos)
-        model.addAttribute("testingData", "Результаты:\nareaUnderROC = \n areaUnderPR = ")
+        def result = svm.predict(repository.testSelection)
+        model.addAttribute("trainingData", svm.model.toString())
+        model.addAttribute("testingData", "Результаты: $result")
         model.addAttribute("resultMessage", "Анализ тестовой выборки прошел успешно!")
+        return TITANIC_URI
+    }
+
+    @RequestMapping("/titanic/clear")
+    String titanic_clear(Model model) {
+        svm.clearModel()
+        model.addAttribute("trainingData", "")
+        model.addAttribute("testingData", "")
+        model.addAttribute("resultMessage", "Модель очищена!")
         return TITANIC_URI
     }
 

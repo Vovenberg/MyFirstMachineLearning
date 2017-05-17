@@ -31,10 +31,10 @@ public class SVMModel implements java.io.Serializable
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
+		builder.append("\nrho: ").append(Arrays.toString(rho)).append("sv_coef: ");
 		for (int i = 0; i < sv_coef.length; i++) {
 			builder.append(Arrays.toString(sv_coef[i]));
 		}
-		builder.append("\nrho: ").append(Arrays.toString(rho)).append("; probA: ").append(Arrays.toString(probA)).append("; probB: ").append(Arrays.toString(probB));
 		return builder.toString();
 	}
 };

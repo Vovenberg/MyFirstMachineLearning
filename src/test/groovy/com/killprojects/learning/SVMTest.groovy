@@ -3,6 +3,7 @@ package com.killprojects.learning
 import com.killprojects.Application
 import com.killprojects.learning.models.main.SVMParams
 import com.killprojects.repository.TitanicRepository
+import com.killprojects.utils.ParamsUtil
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -23,7 +24,14 @@ class SVMTest extends GroovyTestCase {
 
     @Test
     void testTrain() {
-        svm.train(repository.trainingSelection,new SVMParams())
+        svm.train(repository.trainingSelection,ParamsUtil.initParams(3,0))
         assert true
+    }
+
+    @Test
+    void predictTrain() {
+        svm.train(repository.trainingSelection,ParamsUtil.initParams(2,1))
+        def s = svm.predict(repository.testSelection)
+        assert s
     }
 }

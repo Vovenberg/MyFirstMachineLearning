@@ -25,14 +25,10 @@ class SVM {
         int max_index = 0;
 
         data.each { it ->
-            vy.addElement(Double.parseDouble(it.get(3).toString()))
-            FeatureNode[] x = new FeatureNode[3]
-            x.eachWithIndex { FeatureNode entry, int i ->
-                def node = new FeatureNode(index: i + 1, value: Double.parseDouble(it.get(i).toString()))
-                x[i] = node
-            }
-            max_index = Collections.max(x.collect { it.index })
+            vy.addElement(getYfromVector(it))
+            FeatureNode[] x = getXfromVector(it)
             vx.addElement(x)
+            max_index = Collections.max(x.collect { it.index })
         }
         prob = new SVNProblem()
         prob.l = vy.size()
@@ -51,8 +47,18 @@ class SVM {
         model = svm.svm_train(prob, params)
     }
 
-    public void predict() {
+    public String predict(List<List<Integer>> data) {
+        int correct, total
+        data.each {
+            def x = getXfromVector(it)
+            double target = getYfromVector(it)
+            double v = svm.svm_predict(model, x)
 
+            if (v == target) ++correct
+            ++total
+        }
+        def accuracy = correct / total * 100
+        "$accuracy%; ($correct/$total)"
     }
 
     SVNProblem getProb() {
@@ -61,5 +67,22 @@ class SVM {
 
     SVMModel getModel() {
         return model
+    }
+
+    void clearModel() {
+        model = null
+    }
+
+    private static double getYfromVector(List<Integer> it) {
+        Double.parseDouble(it.get(3).toString())
+    }
+
+    private static FeatureNode[] getXfromVector(it) {
+        FeatureNode[] x = new FeatureNode[3]
+        x.eachWithIndex { FeatureNode entry, int i ->
+            def node = new FeatureNode(index: i + 1, value: Double.parseDouble(it.get(i).toString()))
+            x[i] = node
+        }
+        x
     }
 }
