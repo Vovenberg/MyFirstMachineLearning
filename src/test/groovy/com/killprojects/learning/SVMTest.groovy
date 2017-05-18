@@ -23,7 +23,7 @@ class SVMTest extends GroovyTestCase {
 
     @Test
     void testTrain() {
-        svm.train(repository.trainingSelection,ParamsUtil.initParamsRBF(3,0,0.5))
+        svm.train(repository.trainingSelection,ParamsUtil.initParamsRBF(0.05,0.5))
         println svm.model.rho
     }
 
@@ -37,7 +37,7 @@ class SVMTest extends GroovyTestCase {
 
     @Test
     void predictTrainRBF() {
-        svm.train(repository.trainingSelection,ParamsUtil.initParamsRBF(2,1,0.5))
+        svm.train(repository.trainingSelection,ParamsUtil.initParamsRBF(0.05,0.5))
         def s = svm.predict(repository.testSelection)
         assert s
         println s

@@ -20,7 +20,7 @@ class LoaderTest extends GroovyTestCase {
 
     @Test
     void testLoadDataFromLocal() {
-        def data = loader.loadInputStreamWithData("titanic.txt", true)
+        def data = loader.loadInputStreamWithData("titanicData.txt", true)
         assert data
     }
 }

@@ -6,7 +6,7 @@ import com.killprojects.learning.models.main.SVMParams
  * Created by Vladimir on 17.05.2017.
  */
 class ParamsUtil {
-    static SVMParams initParamsRBF(double degree, double gamma, double nu) {
+    static SVMParams initParamsRBF( double gamma, double nu) {
         SVMParams param = basic()
         param.kernel_type = SVMParams.RBF
 

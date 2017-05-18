@@ -34,25 +34,22 @@ class TitanicController {
         def testingInfos = repository.testSelection
         model.addAttribute("trainingData", trainingInfos)
         model.addAttribute("testingData", testingInfos)
-        model.addAttribute("degree", 3)
-        model.addAttribute("gamma", 0)
+        model.addAttribute("gamma", 0.05)
         model.addAttribute("nu", 0.5)
         return TITANIC_URI
     }
 
     @RequestMapping("/titanic/train")
     String titanic_train(Model model,
-                         @RequestParam("degree") double degree,
                          @RequestParam("gamma") double gamma,
                          @RequestParam("nu") double nu) {
-        def params = ParamsUtil.initParamsRBF(degree, gamma, nu)
+        def params = ParamsUtil.initParamsRBF(gamma, nu)
         def training = repository.trainingSelection
         svm.train(training, params)
 
         model.addAttribute("trainingData", svm.getModel().toString())
         model.addAttribute("testingData", "Ожидается анализ тестовой выборки...")
         model.addAttribute("resultMessage", "Обучение прошло успешно!")
-        model.addAttribute("degree", (int) degree)
         model.addAttribute("gamma", (int) gamma)
         model.addAttribute("nu", nu)
         return TITANIC_URI
@@ -66,7 +63,6 @@ class TitanicController {
         model.addAttribute("trainingData", svm.model.toString())
         model.addAttribute("testingData", "Результат.\n Процент успешных классификаций: $result")
         model.addAttribute("resultMessage", "Анализ тестовой выборки прошел успешно!")
-        model.addAttribute("degree", (int) svm.model.param.degree)
         model.addAttribute("gamma", (int) Math.floor(svm.model.param.gamma))
         model.addAttribute("nu", svm.model.param.nu)
         return TITANIC_URI
@@ -78,8 +74,7 @@ class TitanicController {
         model.addAttribute("trainingData", "")
         model.addAttribute("testingData", "")
         model.addAttribute("resultMessage", "Модель очищена!")
-        model.addAttribute("degree", 3)
-        model.addAttribute("gamma", 0)
+        model.addAttribute("gamma", 0.05)
         model.addAttribute("nu", 0.5)
         return TITANIC_URI
     }

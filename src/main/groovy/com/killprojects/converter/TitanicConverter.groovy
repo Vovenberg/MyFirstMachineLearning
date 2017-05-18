@@ -29,7 +29,7 @@ class TitanicConverter implements Converter<TitanicPassenger> {
         def resultList = new ArrayList()
         data.readLines().eachWithIndex { it, i ->
             def (passClass, age, sex, survive) = it.tokenize("        ")
-            def xy= [passClass,age,sex,survive]
+            def xy= [passClass,age,sex,survive == 0?-1:1]
             resultList.add(xy)
         }
         shuffleList(resultList)
