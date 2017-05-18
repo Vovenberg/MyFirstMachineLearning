@@ -58,7 +58,13 @@ class SVM {
             ++total
         }
         def accuracy = correct / total * 100
-        "$accuracy%; ($correct/$total)"
+        "$accuracy% (угадана судьба $correct из $total пассажиров из тестовой выборки)"
+    }
+
+    public double predictOneVector(List<Integer> data) {
+        def x = getXfromVector(data)
+        double v = svm.svm_predict(model, x)
+        v
     }
 
     SVNProblem getProb() {

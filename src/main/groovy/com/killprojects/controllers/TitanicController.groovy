@@ -1,5 +1,6 @@
 package com.killprojects.controllers
 
+import com.killprojects.enums.titanic.SurviveType
 import com.killprojects.learning.SVM
 import com.killprojects.model.TitanicPassenger
 import com.killprojects.repository.TitanicRepository
@@ -15,7 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam
  */
 @Controller
 class TitanicController {
-    public static final String TITANIC_URI = "index"
+    public static final String TITANIC_URI = "training"
+    public static final String GUESS_URI = "guess"
 
     @Autowired
     TitanicRepository repository
@@ -23,10 +25,7 @@ class TitanicController {
     @Autowired
     SVM svm
 
-    @RequestMapping("/")
-    String index(Model model) {
-        return titanic_main(model)
-    }
+    def message
 
     @RequestMapping("/titanic")
     String titanic_main(Model model) {
@@ -77,6 +76,33 @@ class TitanicController {
         model.addAttribute("gamma", 0.05)
         model.addAttribute("nu", 0.5)
         return TITANIC_URI
+    }
+
+    @RequestMapping("/guess")
+    String titanic_guess(Model model) {
+        def params = ParamsUtil.initParamsRBF(0.05, 0.5)
+        def training = repository.trainingSelection
+        svm.train(training, params)
+
+        def testSelection = repository.testSelection
+        def result = svm.predict(testSelection)
+        message = "Процент успешного прогнозирования: $result"
+        model.addAttribute("train", message)
+        return GUESS_URI
+    }
+
+    @RequestMapping("/titanic/guess")
+    String titanic_guess(Model model,
+                         @RequestParam("passClass") int passClass,
+                         @RequestParam("sex") int sex,
+                         @RequestParam("age") int age) {
+        def result = svm.predictOneVector([passClass, sex, age])
+        model.addAttribute("result", result == -1.0 ? "К сожалению Вы не выживете(" : "Вы спаслись!")
+        model.addAttribute("passClass", passClass)
+        model.addAttribute("sex", sex)
+        model.addAttribute("age", age)
+        model.addAttribute("train", message)
+        return GUESS_URI
     }
 
     private static GString getInfo(TitanicPassenger it) {

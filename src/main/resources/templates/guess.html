@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>VLDMRProject</title>
+</head>
+<body>
+    <p>Прошло обучение на 2000 пассажирах Титаника</p>
+    <p th:text="${train}"></p>
+    <form action="/titanic/guess">
+        <p>Пассажирский класс:</p>
+        <select name="passClass" title="passClass">
+            <option value="1">1 класс</option>
+            <option value="2">2 класс</option>
+            <option value="3">3 класс</option>
+            <option value="0">Команда</option>
+        </select>
+        <p>Пол:</p>
+        <select name="sex" title="sex">
+            <option value="1">Мужчина</option>
+            <option value="0">Женщина</option>
+        </select>
+        <p>Возрастной тип:</p>
+        <select name="age" title="age">
+            <option value="0">Ребенок</option>
+            <option value="1">Взрослый</option>
+        </select>
+        <input type="submit" value="Предсказать" />
+    </form>
+    <h2 th:text="${result}"></h2>
+</body>
+</html>
